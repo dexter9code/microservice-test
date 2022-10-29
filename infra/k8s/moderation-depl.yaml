@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation-depl
+  template:
+    metadata:
+      labels:
+        app: moderation-depl
+    spec:
+      containers:
+      - name: moderation-depl
+        image: rudy5/moderation
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  selector:
+    app: moderation
+  ports:
+  - port: 2002
+    targetPort: 2002
+

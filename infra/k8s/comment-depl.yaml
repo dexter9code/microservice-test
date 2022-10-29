@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments-depl
+  template:
+    metadata:
+      labels:
+        app: comments-depl
+    spec:
+      containers:
+      - name: comments-depl
+        image: rudy5/comments
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-srv
+spec:
+  selector:
+    app: comments
+  ports:
+  - port: 2000  
+    targetPort: 2000
+
+
